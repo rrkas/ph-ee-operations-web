@@ -34,7 +34,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
    * Intercepts a Http request and sets the request headers.
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
+    return next.handle(this.injectToken(request));
     this.retrieveAuthData();
     if (request.url.indexOf('/oauth/token') !== -1) {
       return next.handle(this.injectToken(request));

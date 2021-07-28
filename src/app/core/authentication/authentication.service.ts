@@ -69,24 +69,24 @@ export class AuthenticationService {
   }
 
   init() {
-    this.rememberMe = false;
-    const savedCredentials = JSON.parse(
-      this.getStoreageItem(this.credentialsStorageKey)
-    );
-    if (savedCredentials) {
-      if (savedCredentials.rememberMe) {
-        this.rememberMe = true;
-        this.storage = localStorage;
-      }
+    // this.rememberMe = false;
+    // const savedCredentials = JSON.parse(
+    //   this.getStoreageItem(this.credentialsStorageKey)
+    // );
+    // if (savedCredentials) {
+    //   if (savedCredentials.rememberMe) {
+    //     this.rememberMe = true;
+    //     this.storage = localStorage;
+    //   }
 
-      const oAuthRefreshToken = JSON.parse(this.getStoreageItem(this.oAuthTokenDetailsStorageKey)).refresh_token;
-      if (oAuthRefreshToken) {
-        this.refreshAccessToken = true;
-        this.authorizationToken = `Bearer ${oAuthRefreshToken}`;
-      } else {
-        this.authorizationToken = `Basic ${savedCredentials.base64EncodedAuthenticationKey}`;
-      }
-    }
+    //   const oAuthRefreshToken = JSON.parse(this.getStoreageItem(this.oAuthTokenDetailsStorageKey)).refresh_token;
+    //   if (oAuthRefreshToken) {
+    //     this.refreshAccessToken = true;
+    //     this.authorizationToken = `Bearer ${oAuthRefreshToken}`;
+    //   } else {
+    //     this.authorizationToken = `Basic ${savedCredentials.base64EncodedAuthenticationKey}`;
+    //   }
+    // }
   }
 
   hasAccess(permission: String): Boolean {
@@ -105,36 +105,14 @@ export class AuthenticationService {
     this.alertService.alert({ type: 'Authentication Start', message: 'Please wait...' });
     this.rememberMe = loginContext.remember;
     this.storage = this.rememberMe ? localStorage : sessionStorage;
-    this.tenantId = loginContext.tenant;
+    // this.authenticationInterceptor.setTenantId(loginContext.tenant);
     let httpParams = new HttpParams();
-    this.username = loginContext.username;
     httpParams = httpParams.set('username', loginContext.username);
     httpParams = httpParams.set('password', loginContext.password);
     //httpParams = httpParams.set('tenantIdentifier', loginContext.tenant);
-    if (environment.oauth.enabled === 'true') {
-
-      httpParams = httpParams.set('grant_type', 'password');
-      if (environment.oauth.basicAuth === "true") {
-        this.authorizationToken = `Basic ${environment.oauth.basicAuthToken}`;
-      }
-      return this.http.disableApiPrefix().post(`${environment.oauth.serverUrl}/oauth/token`, {}, { params: httpParams })
-        .pipe(
-          map((tokenResponse: OAuth2Token) => {
-            // TODO: fix UserDetails API
-            this.storage.setItem(this.oAuthTokenDetailsStorageKey, JSON.stringify(tokenResponse));
-            this.onLoginSuccess({ username: loginContext.username, accessToken: tokenResponse.access_token, authenticated: true, tenantId: loginContext.tenant } as any);
-            return of(true);
-          })
-        );
-    } else {
-      return this.http.post('/authentication', {}, { params: httpParams })
-        .pipe(
-          map((credentials: Credentials) => {
-            this.onLoginSuccess(credentials);
-            return of(true);
-          })
-        );
-    }
+   
+    this.onLoginSuccess({} as any);
+    return of(true);
   }
 
   /**
@@ -173,7 +151,7 @@ export class AuthenticationService {
    */
   public refreshOAuthAccessToken() {
     const oAuthData = JSON.parse(this.getStoreageItem(this.oAuthTokenDetailsStorageKey));
-    const oAuthRefreshToken = oAuthData.refresh_token;
+    const oAuthRefreshToken = oAuthData==null ? null : oAuthData.refresh_token;
     this.tenantId = JSON.parse(this.getStoreageItem(this.credentialsStorageKey)).tenantId;
     let httpParams = new HttpParams();
     httpParams = httpParams.set('grant_type', 'refresh_token');

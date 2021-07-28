@@ -1,6 +1,7 @@
 dist
 node_modules
 .vscode
+.idea
 .github
 package-lock.json
 src/assets/*.properties

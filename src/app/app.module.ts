@@ -35,7 +35,8 @@ import { PaymentHubModule } from './payment-hub/paymenthub.module';
 
 /** Main Routing Module */
 import { AppRoutingModule } from './app-routing.module';
-
+import { ChargesComponent } from './charges/charges.component';
+import { ChargesModule } from './charges/charge.module';
 
 export function initConfig(config: AppConfig) {
   return () => config.load();
@@ -62,6 +63,7 @@ export function initConfig(config: AppConfig) {
     UsersModule,
     PaymentHubModule,
     AppRoutingModule,
+    ChargesModule
   ],
   declarations: [WebAppComponent, NotFoundComponent],
   providers: [AppConfig,
