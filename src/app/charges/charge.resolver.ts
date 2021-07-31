@@ -4,9 +4,8 @@ import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
+import { ChargesService } from './charges.service';
 
-/** Custom Services */
-// import { ProductsService } from 'app/products/products.service';
 
 /**
  * Charge data resolver.
@@ -15,10 +14,10 @@ import { Observable } from 'rxjs';
 export class ChargeResolver implements Resolve<Object> {
 
   /**
-   * @param {productsService} productsService Products service.
+   * @param {ChargesService} chargesService Charges service.
    */
   constructor(
-    // private productsService: ProductsService
+    private chargesService: ChargesService
     ) {}
 
   /**
@@ -27,8 +26,7 @@ export class ChargeResolver implements Resolve<Object> {
    */
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const chargeId = route.paramMap.get('id');
-    // return this.productsService.getCharge(chargeId);
-    return null;
+    return this.chargesService.getCharge(chargeId);
   }
 
 }

@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 /** Custom Services */
-// import { ProductsService } from 'app/products/products.service';
+import { ChargesService } from '../charges.service';
 
 /**
  * Edit Charge component.
@@ -45,13 +45,13 @@ export class EditChargeComponent implements OnInit {
 
     /**
      * Retrieves the charge data from `resolve`.
-     * @param {ProductsService} productsService Products Service.
+     * @param {ChargesService} chargesService Charges Service.
      * @param {FormBuilder} formBuilder Form Builder.
      * @param {ActivatedRoute} route Activated Route.
      * @param {Router} router Router for navigation.
      */
   constructor(
-    // private productsService: ProductsService,
+    private chargesService: ChargesService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -139,10 +139,10 @@ export class EditChargeComponent implements OnInit {
     const charges = this.chargeForm.value;
     charges.locale = 'en';
     charges.chargePaymentMode = this.chargeData.chargePaymentMode.id;
-  //   this.productsService.updateCharge(this.chargeData.id.toString(), charges)
-  //     .subscribe((response: any) => {
-  //       this.router.navigate(['../'], { relativeTo: this.route });
-  //  });
+    this.chargesService.updateCharge(this.chargeData.id.toString(), charges)
+      .subscribe((response: any) => {
+        this.router.navigate(['../'], { relativeTo: this.route });
+   });
   }
 
 }

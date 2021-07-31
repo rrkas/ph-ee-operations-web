@@ -4,15 +4,14 @@ import { Resolve, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
+import { ChargesService } from './charges.service';
 
-/** Custom Services */
-// import { ProductsService } from '../products.service';
 
 @Injectable()
 export class ChargesTemplateAndResolver implements Resolve<Object> {
 
     constructor(
-        // private productsService: ProductsService
+        private chargesService: ChargesService
         ) { }
 
     /**
@@ -21,8 +20,7 @@ export class ChargesTemplateAndResolver implements Resolve<Object> {
      */
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
         const savingProductId = route.paramMap.get('id');
-        // return this.productsService.getCharge(savingProductId, true);
-        return null;
+        return this.chargesService.getCharge(savingProductId, true);
     }
 
 }

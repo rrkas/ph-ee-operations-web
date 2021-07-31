@@ -4,9 +4,10 @@ import { Resolve } from '@angular/router';
 
 /** rxjs Imports */
 import { Observable } from 'rxjs';
+import { ChargesService } from './charges.service';
 
 /** Custom Services */
-// import { ProductsService } from '../products.service';
+// import { ChargesService } from '../Charges.service';
 
 /**
  * Charges template data resolver.
@@ -15,10 +16,10 @@ import { Observable } from 'rxjs';
 export class ChargesTemplateResolver implements Resolve<Object> {
 
   /**
-   * @param {ProductsService} productsService Products service.
+   * @param {ChargesService} ChargesService Charges service.
    */
   constructor(
-    // private productsService: ProductsService
+    private chargesService: ChargesService
     ) {}
 
   /**
@@ -26,8 +27,8 @@ export class ChargesTemplateResolver implements Resolve<Object> {
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    // return this.productsService.getChargesTemplate();
-    return null;
+    return this.chargesService.getChargesTemplate();
+    // return null;
   }
 
 }

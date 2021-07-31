@@ -6,7 +6,7 @@ import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
 
 /** Custom Services */
-// import { ProductsService } from '../products.service';
+import { ChargesService } from './charges.service';
 
 /**
  * Charges data resolver.
@@ -15,19 +15,18 @@ import { Observable } from 'rxjs';
 export class ChargesResolver implements Resolve<Object> {
 
   /**
-   * @param {ProductsService} productsService Products service.
+   * @param {chargesService} chargesService charges service.
    */
   constructor(
-    // private productsService: ProductsService
+    private chargesService: ChargesService
     ) {}
 
   /**
-   * Returns the products data.
+   * Returns the charges data.
    * @returns {Observable<any>}
    */
   resolve(): Observable<any> {
-    // return this.productsService.getCharges();
-    return null; 
+    return this.chargesService.getCharges();
   }
 
 }

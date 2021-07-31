@@ -8,6 +8,7 @@ import { HomeRoutingModule } from './home-routing.module';
 /** Custom Components */
 import { HomeComponent } from './home.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { DatePipe } from '@angular/common';
 
 /**
  * Home Component
@@ -17,7 +18,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 @NgModule({
   imports: [
     SharedModule,
-    HomeRoutingModule
+    HomeRoutingModule,
   ],
   declarations: [
     HomeComponent,

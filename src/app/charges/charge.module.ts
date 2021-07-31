@@ -1,4 +1,5 @@
 import { Injectable, NgModule } from '@angular/core';
+import { DatePipe } from '@angular/common';
 
 /** Charges */
 import { ChargesComponent } from './charges.component';
@@ -11,6 +12,9 @@ import { ChargesTemplateAndResolver } from './charges-template-and-resolver';
 import { EditChargeComponent } from './edit-charge/edit-charge.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from 'app/shared/shared.module';
+import { MatCardModule } from '@angular/material';
+import { HomeRoutingModule } from 'app/home/home-routing.module';
 
 @NgModule({
    declarations: [
@@ -19,14 +23,19 @@ import { HttpClientModule } from '@angular/common/http';
       EditChargeComponent,
       ViewChargeComponent,
    ],
-   imports: [HttpClientModule],
+   imports: [
+      HttpClientModule,
+      SharedModule,
+      MatCardModule,
+      HomeRoutingModule,
+   ],
    providers: [
       ChargeResolver,
       ChargesResolver,
       ChargesTemplateResolver,
       ChargesTemplateAndResolver,
+      DatePipe,
    ],
-   bootstrap: [ChargesComponent]
 })
 @Injectable({
    providedIn: 'root'

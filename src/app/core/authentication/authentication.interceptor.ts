@@ -11,7 +11,10 @@ import { Router } from '@angular/router';
 
 /** Http request options headers. */
 const httpOptions = {
-  headers: {}
+  headers: {
+    'Fineract-Platform-TenantId': 'default', //environment.fineractPlatformTenantId
+    'Authorization': 'Basic bWlmb3M6cGFzc3dvcmQ='
+  }
 };
 
 /** Authorization header. */
@@ -95,7 +98,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
   setAuthorization(authenticationKey: String) {
     if (authenticationKey) {
-      httpOptions.headers[authorizationHeader] = authenticationKey;
+      // httpOptions.headers[authorizationHeader] = authenticationKey;
     } else {
       delete httpOptions.headers[authorizationHeader];
     }

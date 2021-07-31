@@ -10,6 +10,9 @@ export let environment = {
   name: "dev",
   production: false,
   version: env.npm_package_version + "-dev",
+  baseApiUrl: JSON.parse(localStorage.getItem('mifosXServerURL')) || 'localhost',  // For connecting to server running elsewhere update the base API URL
+  apiProvider: '/fineract-provider/api',
+  apiVersion: '/v1',
   serverUrl: "",
   oauth: {
     enabled: "false", // For connecting to Mifos X using OAuth2 Authentication change the value to true
@@ -21,3 +24,6 @@ export let environment = {
   supportedLanguages: ["en-US", "fr-FR"],
   externalConfigurationFile: ""
 };
+
+environment.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}${environment.apiVersion}`;
+environment.oauth.serverUrl = `${environment.baseApiUrl}${environment.apiProvider}`;

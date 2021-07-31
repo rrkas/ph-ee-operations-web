@@ -6,7 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 
 /** rxjs Imports */
-import { of } from 'rxjs';
+// import { of } from 'rxjs';
 
 /**
  * Charges component.
@@ -26,9 +26,9 @@ export class ChargesComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   /** Paginator for charges table. */
-  // @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   /** Sorter for charges table. */
-  // @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
 
   /**
    * Retrieves the charges data from `resolve`.
@@ -37,6 +37,7 @@ export class ChargesComponent implements OnInit {
   constructor(private route: ActivatedRoute) {
     this.route.data.subscribe(( data: { charges: any }) => {
       this.chargeData = data.charges;
+      console.log(this.chargeData);
     });
   }
 
@@ -59,15 +60,16 @@ export class ChargesComponent implements OnInit {
    * Initializes the data source, paginator and sorter for charges table.
    */
   setCharges() {
+    console.log(this.chargeData);
     this.dataSource = new MatTableDataSource(this.chargeData);
-    // this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator = this.paginator;
     this.dataSource.sortingDataAccessor = (charge: any, property: any) => {
       switch (property) {
         case 'chargeAppliesTo': return charge.chargeAppliesTo.value;
         default: return charge[property];
       }
     };
-    // this.dataSource.sort = this.sort;
+    this.dataSource.sort = this.sort;
   }
 
 }

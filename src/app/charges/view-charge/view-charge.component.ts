@@ -4,10 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 
 /** Custom Services */
-// import { ProductsService } from 'app/products/products.service';
+import { ChargesService } from '../charges.service';
 
 /** Custom Components */
-// import { DeleteDialogComponent } from '../../../shared/delete-dialog/delete-dialog.component';
+import { DeleteDialogComponent } from 'app/shared/delete-dialog/delete-dialog.component';
 
 /**
  * View Charge Component.
@@ -24,13 +24,13 @@ export class ViewChargeComponent implements OnInit {
 
   /**
    * Retrieves the charge data from `resolve`.
-   * @param {ProductsService} productsService Products Service.
+   * @param {ChargesService} chargesService Charges Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {MatDialog} dialog Dialog reference.
    */
   constructor(
-              // private productsService: ProductsService,
+              private chargesService: ChargesService,
               private route: ActivatedRoute,
               private router: Router,
               private dialog: MatDialog) {
@@ -46,17 +46,17 @@ export class ViewChargeComponent implements OnInit {
    * Deletes the charge and redirects to charges.
    */
   deleteCharge() {
-    // const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
-    //   data: { deleteContext: `charge ${this.chargeData.id}` }
-    // });
-    // deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
-    //   if (response.delete) {
-    //     this.productsService.deleteCharge(this.chargeData.id)
-    //       .subscribe(() => {
-    //         this.router.navigate(['/products/charges']);
-    //       });
-    //   }
-    // });
+    const deleteChargeDialogRef = this.dialog.open(DeleteDialogComponent, {
+      data: { deleteContext: `charge ${this.chargeData.id}` }
+    });
+    deleteChargeDialogRef.afterClosed().subscribe((response: any) => {
+      if (response.delete) {
+        this.chargesService.deleteCharge(this.chargeData.id)
+          .subscribe(() => {
+            this.router.navigate(['/charges']);
+          });
+      }
+    });
   }
 
 }

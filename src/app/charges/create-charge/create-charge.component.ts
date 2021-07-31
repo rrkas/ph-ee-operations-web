@@ -3,9 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
-
-/** Custom Services */
-// import { ProductsService } from '../../products.service';
+import { ChargesService } from '../charges.service';
 
 /**
  * Create charge component.
@@ -39,19 +37,20 @@ export class CreateChargeComponent implements OnInit {
   /**
    * Retrieves the charges template data and income and liability account data from `resolve`.
    * @param {FormBuilder} formBuilder Form Builder.
-   * @param {ProductsService} productsService Products Service.
+   * @param {ChargesService} chargesService Charges Service.
    * @param {ActivatedRoute} route Activated Route.
    * @param {Router} router Router for navigation.
    * @param {DatePipe} datePipe Date Pipe to format date.
    */
   constructor(private formBuilder: FormBuilder,
-              // private productsService: ProductsService,
+              private chargesService: ChargesService,
               private route: ActivatedRoute,
               private router: Router,
               private datePipe: DatePipe) {
     this.route.data.subscribe((data: { chargesTemplate: any }) => {
       this.chargesTemplateData = data.chargesTemplate;
-      this.incomeAndLiabilityAccountData = data.chargesTemplate.incomeOrLiabilityAccountOptions.incomeAccountOptions
+      console.log(this.chargesTemplateData);
+      this.incomeAndLiabilityAccountData = (data.chargesTemplate.incomeOrLiabilityAccountOptions.incomeAccountOptions || '')
         .concat(data.chargesTemplate.incomeOrLiabilityAccountOptions.liabilityAccountOptions);
     });
   }
@@ -222,9 +221,9 @@ export class CreateChargeComponent implements OnInit {
     if (!charge.taxGroupId) {
       delete charge.taxGroupId;
     }
-    // this.productsService.createCharge(charge).subscribe((response: any) => {
-    //   this.router.navigate(['../'], { relativeTo: this.route });
-    // });
+    this.chargesService.createCharge(charge).subscribe((response: any) => {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    });
   }
 
 }
