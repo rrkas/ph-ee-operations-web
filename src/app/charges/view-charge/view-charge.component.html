@@ -1,12 +1,14 @@
 <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="2%" fxLayout.lt-md="column" class="container m-b-20">
-    <!-- <button mat-raised-button color="primary" [routerLink]="['edit']" *mifosxHasPermission="'UPDATE_CHARGE'">
+    <!-- *mifosxHasPermission="'UPDATE_CHARGE'" -->
+    <button mat-raised-button color="primary" [routerLink]="['edit']">
     <fa-icon icon="edit"></fa-icon>&nbsp;&nbsp;
     Edit
   </button>
-  <button mat-raised-button color="warn" (click)="deleteCharge()" *mifosxHasPermission="'DELETE_CHARGE'">
+    <!-- *mifosxHasPermission="'DELETE_CHARGE'" -->
+    <button mat-raised-button color="warn" (click)="deleteCharge()">
     <fa-icon icon="trash"></fa-icon>&nbsp;&nbsp;
     Delete
-  </button> -->
+  </button>
 </div>
 
 <div class="container">

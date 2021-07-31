@@ -1,4 +1,4 @@
-<!-- <div class="container">
+<div class="container">
 
     <mat-card>
 
@@ -162,11 +162,12 @@
 
             <mat-card-actions fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="5px">
                 <button type="button" mat-raised-button [routerLink]="['../']">Cancel</button>
-                <button mat-raised-button color="primary" [disabled]="!chargeForm.valid" *mifosxHasPermission="'UPDATE_CHARGE'">Submit</button>
+                <!-- *mifosxHasPermission="'UPDATE_CHARGE'" -->
+                <button mat-raised-button color="primary" [disabled]="!chargeForm.valid">Submit</button>
             </mat-card-actions>
 
         </form>
 
     </mat-card>
 
-</div> -->
+</div>
